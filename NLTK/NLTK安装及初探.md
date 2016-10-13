@@ -52,7 +52,7 @@ fishery time forecastle head sun matter room wind
 
 判断在文本单词的位置,或检测在文本出现特定的词，并显示在同样的背景下一些词:
 ```python
->>> text1.dispersion_plot(["air"])
+>>> text1.dispersion_plot(["air","freedom","wind","crew"])
 ```
 ![air](https://github.com/fountainhead-gq/MachineLearning/blob/master/NLTK/image/air.jpg)
 
@@ -245,4 +245,4 @@ NLTK的频率分布函数：
 
 ### 参考
 
-![nltk about book](http://www.nltk.org/book/ch01.html)
+[nltk about book](http://www.nltk.org/book/ch01.html)
