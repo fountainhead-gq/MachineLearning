@@ -54,7 +54,8 @@ fishery time forecastle head sun matter room wind
 ```python
 >>> text1.dispersion_plot(["air"])
 ```
-![air]()
+![air](https://github.com/fountainhead-gq/MachineLearning/blob/master/NLTK/image/air.jpg)
+
 检查词的共享环境
 ```python
 >>> text1.common_contexts(["air","wind"])
@@ -121,11 +122,123 @@ the_but the_i the_he the_to the_the the_is the_that the_which the_and
 ```python
 >>> fdist1.plot(50, cumulative=True)
 ```
-![fdist1]()
+![fdist1](https://github.com/fountainhead-gq/MachineLearning/blob/master/NLTK/image/fdist1.jpg)
 
 返回出现一次的词
 ```python
 >>> len(fdist1.hapaxes())
 9002
 >>> fdist1.hapaxes()
+```
+
+
+### Fine-grained Selection of Words 细粒度选择词
+
+数学集表达式
+```
+{w | w ∈ V & P(w)}
+
+[w for w in V if p(w)]
+```
+
+查询单词长度超过15的单词：
+```python
+>>> V = set(text1)
+>>> long_words = [w for w in V if len(w) > 15]
+>>> sorted(long_words)
+['CIRCUMNAVIGATION', 'Physiognomically', 'apprehensiveness', 'cannibalistically',
+'characteristically', 'circumnavigating', 'circumnavigation', 'circumnavigations',
+'comprehensiveness', 'hermaphroditical', 'indiscriminately', 'indispensableness',
+'irresistibleness', 'physiognomically', 'preternaturalness', 'responsibilities',
+'simultaneousness', 'subterraneousness', 'supernaturalness', 'superstitiousness',
+'uncomfortableness', 'uncompromisedness', 'undiscriminating', 'uninterpenetratingly']
+```
+
+单词长度超过12,并且出现超过10次的词：
+```python
+>>> long_words = [w for w in V if len(w) > 12 and fdist1[w]>10]
+>>> sorted(long_words)
+['circumstances', 'indispensable', 'involuntarily', 'peculiarities', 'perpendicular', 'simultaneously', 'unaccountable']
+```
+
+
+### Collocations and Bigrams 搭配与双词
+
+查询常用的词组(双联词)搭配：
+```python
+>>> text4.collocations()
+United States; fellow citizens; four years; years ago; Federal
+Government; General Government; American people; Vice President; Old
+World; Almighty God; Fellow citizens; Chief Magistrate; Chief Justice;
+God bless; every citizen; Indian tribes; public debt; one another;
+foreign nations; political parties
+```
+
+
+### Counting Other Things 计数
+
+统计不同长度单词出现的频率：
+```python
+>>> fdist = FreqDist(len(w) for w in text1)
+>>> print(fdist)
+<FreqDist with 19 samples and 260819 outcomes>
+>>> fdist
+FreqDist({3: 50223, 1: 47933, 4: 42345, 2: 38513, 5: 26597, 6: 17111, 7: 14399, 8: 9966, 9: 6428, 10: 3528, ...})
+# 数字1到20，因为不存在长度超过20的单词
+```
+
+同样显示不用单词长度的出现频率
+```python
+>>> fdist.most_common()
+[(3, 50223), (1, 47933), (4, 42345), (2, 38513), (5, 26597), (6, 17111), (7, 14399),
+(8, 9966), (9, 6428), (10, 3528), (11, 1873), (12, 1053), (13, 567), (14, 177),
+(15, 70), (16, 22), (17, 12), (18, 1), (20, 1)]
+>>> fdist.max()
+3
+>>> fdist[3]
+50223
+>>> fdist.freq(3)
+0.19255882431878046
+```
+
+NLTK的频率分布函数：
+
+|示例      |描述      |
+|------------------------  |--------------------------- |
+|fdist = FreqDist(samples) |创建一个包含给定的样本频率分布|
+|fdist['monstrous']        |统计给定词（如monstrous）的出现次数 |
+|fdist.freq('monstrous')   |统计定样品（如monstrous）的频率 |
+|fdist.N()                 |样本总数   等价于len(samples) |
+|fdist.most_common(n)      |n个最常用的样本频率 |
+|for sample in fdist:	   |遍历样本 |
+|fdist.max()               |样本(长度)的最大计数 |
+|fdist.tabulate()          |制表的频率分布  |
+|fdist.plot()              |样本(长度)频率的曲线图分布   |
+|fdist.plot(cumulative=True) |样本(长度)频率的累计曲线图分布 |
+
+
+比较操作符：
+
+|函数           |描述          |
+|------------   |------------  |
+|s.startswith(t) |测试s是否以t开头 |
+|s.endswith(t)	|测试s是否以t结尾 |
+|t in s	        |t是否是s的子串 |
+|s.islower()	|s是否是小写 |
+|s.isupper()	|s是否是大写 |
+|s.isalpha()	|s非空，并且所有的字符都是字母 |
+|s.isalnum()	|s非空，并且所有的字符都是字母数字 |
+|s.isdigit()	|s非空，并且所有的字符都是数字 |
+|s.istitle()	|s中的全部词是首字母大写 |
+
+例子：
+```python
+>>> sorted(w for w in set(text1) if w.endswith('ableness'))
+['comfortableness', 'honourableness', 'immutableness', 'indispensableness', ...]
+>>> sorted(term for term in set(text4) if 'gnt' in term)
+['Sovereignty', 'sovereignties', 'sovereignty']
+>>> sorted(item for item in set(text6) if item.istitle())
+['A', 'Aaaaaaaaah', 'Aaaaaaaah', 'Aaaaaah', 'Aaaah', 'Aaaaugh', 'Aaagh', ...]
+>>> sorted(item for item in set(sent7) if item.isdigit())
+['29', '61']
 ```
