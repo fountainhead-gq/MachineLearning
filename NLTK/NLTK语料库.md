@@ -1,7 +1,7 @@
 # NLTK文本语料库
 
 
-### Gutenberg Corpus  Gutenberg 语料库
+### Gutenberg Corpus  语料库Gutenberg 
 
 NLTK包含来自[Gutenberg](http://www.gutenberg.org/)的部分电子文本文档，Gutenberg大约有25,000免费的电子图书。
 
@@ -211,7 +211,7 @@ def unusual_words(text):
 ```
 
 #### corpus of stopwords 停用词语库
-过滤掉一些高频词，如 the、to at 等
+过滤掉一些高频词，如 the、to、 at 等
 ```python
 >>> from nltk.corpus import stopwords
 >>> stopwords.words('english')
@@ -229,7 +229,7 @@ def unusual_words(text):
 'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', 'should', 'now']
 ```
 
-*A Word Puzzle:找出有多少的单词，其是长度大于5，且由egivrvonl中的字母组成并且必包含字母r*
+*A Word Puzzle:查找出有多少个单词是由egivrvonl中的字母构成，长度大于5并且必包含字母r*
 ```python
 >>> puzzle_letters = nltk.FreqDist('egivrvonl')
 >>> obligatory = 'r'
