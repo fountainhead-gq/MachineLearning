@@ -83,3 +83,7 @@ def document_features(document):
 print(document_features(movie_reviews.words(r'F:\VENV\test\secret.txt')))
 {'contains(topnotch)': False, 'contains(steamy)': False, 'contains(fantastic)': False, 'contains(eases)': False,...}
 ```
+
+
+### 参考
+[nltk book 07](http://www.nltk.org/book/ch07.html)
