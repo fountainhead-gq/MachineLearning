@@ -79,5 +79,26 @@ P[SEM=''] -> 'in'
         (NP[SEM='Country="china"'] China)))))
 ```
 
+同样，也可以解析成SQL
+```python
+>>> from nltk import load_parser
+>>> cp = load_parser('grammars/book_grammars/sql0.fcfg')
+>>> query = 'What cities are located in China'
+>>> trees = list(cp.parse(query.split()))
+>>> answer = trees[0].label()['SEM']
+>>> answer = [s for s in answer if s]
+>>> q = ' '.join(answer)
+>>> print(q)
+SELECT City FROM city_table WHERE Country="china"
+```
+
+接着执行，查看结果：
+```python
+>>> from nltk.sem import chat80
+>>> rows = chat80.sql_query('corpora/city_database/city.db', q)
+>>> for r in rows: print(r[0], end=" ")
+canton chungking dairen harbin kowloon mukden peking shanghai sian tientsin
+```
+
 ### 参考
 [nltk book 09](http://www.nltk.org/book/ch09.html)        
