@@ -181,3 +181,6 @@ POS_MAP = {
     }),
 }
 ```
+
+### 链接
+[pynlpir tutorial](http://pynlpir.readthedocs.io/en/latest/installation.html)
