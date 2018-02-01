@@ -52,15 +52,15 @@ tf.reduce_sum(x, [0, 1]) ==> 6
 
 `tf.nn.conv2d(input, filter, strides, padding, use_cudnn_on_gpu=None, name=None)` 解释：这个函数的作用是对一个四维的输入数据 input 和四维的卷积核 filter 进行操作，然后对输入数据进行一个二维的卷积操作，最后得到卷积之后的结果。  
 输入参数：
-- input: 一个Tensor。数据类型必须是float32或者float64。
-- filter: 一个Tensor。数据类型必须是input相同。
-- strides: 一个长度是4的一维整数类型数组，每一维度对应的是 input 中每一维的对应移动步数，比如，strides[1] 对应 input[1] 的移动步数。
-- padding: 一个字符串，取值为 SAME 或者 VALID 。
-- use_cudnn_on_gpu: 一个可选布尔值，默认情况下是 True 。
-- name: （可选）为这个操作取一个名字。  
+- `input`: 一个`Tensor`。数据类型必须是`float32`或者`float64`。
+-` filter`: 一个Tensor。数据类型必须是input相同。
+- `strides`: 一个长度是4的一维整数类型数组，每一维度对应的是 input 中每一维的对应移动步数，比如，`strides[1]` 对应 `input[1]` 的移动步数。
+-` padding`: 一个字符串，取值为 `SAME` 或者 `VALID` 。
+- `use_cudnn_on_gpu`: 一个可选布尔值，默认情况下是 `True` 。
+- `name`: （可选）为这个操作取一个名字。  
 
 输出参数：
-一个Tensor，数据类型是 input 相同。
+一个`Tensor`，数据类型是` input` 相同。
 
 ```python
 input_data = tf.Variable( np.random.rand(10,6,6,3), dtype = np.float32 )
