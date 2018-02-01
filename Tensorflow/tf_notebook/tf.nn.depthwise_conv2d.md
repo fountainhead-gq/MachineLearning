@@ -14,12 +14,12 @@ tf.nn.depthwise_conv2d(input,filter,strides,padding,rate=None,name=None,data_for
 ### 示例
 
 现在我们可以形象的解释一下`depthwise_conv2d`卷积了。看普通的卷积，我们对卷积核每一个`out_channel`的两个通道分别和输入的两个通道做卷积相加，得到feature map的一个channel   
-![conv2d_1](./images/conv2d_1.png)
-![conv2d_2](./images/conv2d_2.png)
+![conv2d_1](https://github.com/fountainhead-gq/MachineLearning/blob/master/Tensorflow/images/conv2d_1.png)
+![conv2d_2](https://github.com/fountainhead-gq/MachineLearning/blob/master/Tensorflow/images/conv2d_2.png)
 
 而`depthwise_conv2d`卷积，我们对每一个对应的`in_channel`，分别卷积生成两个`out_channel`，所以获得的feature map的通道数量可以用`in_channel* channel_multiplier`来表达，这个`channel_multiplier`，就可以理解为卷积核的第四维。
-![depthwise_conv2d_1](./images/depthwise_conv2d_1.png)
-![depthwise_conv2d_2](./images/depthwise_conv2d_2.png)
+![depthwise_conv2d_1](https://github.com/fountainhead-gq/MachineLearning/blob/master/Tensorflow/images/depthwise_conv2d_1.png)
+![depthwise_conv2d_2](https://github.com/fountainhead-gq/MachineLearning/blob/master/Tensorflow/images/depthwise_conv2d_2.png)
 
 ```python
 import tensorflow as tf
