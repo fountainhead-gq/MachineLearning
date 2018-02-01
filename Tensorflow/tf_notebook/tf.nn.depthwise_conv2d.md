@@ -5,27 +5,29 @@ tf.nn.depthwise_conv2d(input,filter,strides,padding,rate=None,name=None,data_for
 ```
 除去`name`参数用以指定该操作的名称，`data_format`指定数据格式，与方法有关的一共五个参数：
 - `input`： 指需要做卷积的输入图像，要求是一个4维Tensor，具有`[batch, height, width, in_channels]`这样的shape，具体含义是[训练时一个batch的图片数量, 图片高度, 图片宽度, 图像通道数] 
-- `filter`： 相当于CNN中的卷积核，要求是一个4维Tensor，具有`[filter_height, filter_width, in_channels, channel_multiplier]`这样的shape，具体含义是[卷积核的高度，卷积核的宽度，输入通道数，输出卷积乘子]，同理这里第三维in_channels，就是参数value的第四维
+- `filter`： 相当于CNN中的卷积核，要求是一个4维Tensor，具有`[filter_height, filter_width, in_channels, channel_multiplier]`这样的shape，具体含义是[卷积核的高度，卷积核的宽度，输入通道数，输出卷积乘子]
 - `strides`： 卷积的滑动步长。 
 - `padding`： string类型的量，只能是`”SAME”,”VALID”`其中之一，这个值决定了不同边缘填充方式。
-- `rate`：  见`tf.nn.atrous_conv2d`
+- `rate`：  见`tf.nn.atrous_conv2d`  
   结果返回一个Tensor，shape为`[batch, out_height, out_width, in_channels * channel_multiplier]`，注意这里输出通道变成了`in_channels * channel_multiplier`
 
 ### 示例
-通过图来详细展示普通的卷积过程  
-![conv2d_1]()
-![conv2d_2]()
 
-再来看深度卷积  
-![depthwise_conv2d_1]()
-![depthwise_conv2d_2]()
+现在我们可以形象的解释一下`depthwise_conv2d`卷积了。看普通的卷积，我们对卷积核每一个`out_channel`的两个通道分别和输入的两个通道做卷积相加，得到feature map的一个channel   
+![conv2d_1](./images/conv2d_1.png)
+![conv2d_2](./images/conv2d_2.png)
 
-现在我们可以形象的解释一下`depthwise_conv2d`卷积了。看普通的卷积，我们对卷积核每一个`out_channel`的两个通道分别和输入的两个通道做卷积相加，得到feature map的一个channel，而`depthwise_conv2d`卷积，我们对每一个对应的`in_channel`，分别卷积生成两个`out_channel`，所以获得的feature map的通道数量可以用`in_channel* channel_multiplier`来表达，这个`channel_multiplier`，就可以理解为卷积核的第四维。
+而`depthwise_conv2d`卷积，我们对每一个对应的`in_channel`，分别卷积生成两个`out_channel`，所以获得的feature map的通道数量可以用`in_channel* channel_multiplier`来表达，这个`channel_multiplier`，就可以理解为卷积核的第四维。
+![depthwise_conv2d_1](./images/depthwise_conv2d_1.png)
+![depthwise_conv2d_2](./images/depthwise_conv2d_2.png)
 
 ```python
 import tensorflow as tf
-img1 = tf.constant(value=[[[[1],[2],[3],[4]],[[1],[2],[3],[4]],[[1],[2],[3],[4]],[[1],[2],[3],[4]]]],dtype=tf.float32)
-img2 = tf.constant(value=[[[[1],[1],[1],[1]],[[1],[1],[1],[1]],[[1],[1],[1],[1]],[[1],[1],[1],[1]]]],dtype=tf.float32)
+
+img1 = tf.constant(value=[[[[1],[2],[3],[4]],[[1],[2],[3],[4]],[[1],[2],[3],[4]],[[1],[2],[3],[4]]]]
+                   dtype=tf.float32)
+img2 = tf.constant(value=[[[[1],[1],[1],[1]],[[1],[1],[1],[1]],[[1],[1],[1],[1]],[[1],[1],[1],[1]]]],
+                   dtype=tf.float32)
 img = tf.concat(values=[img1,img2],axis=3)
 filter1 = tf.constant(value=0, shape=[3,3,1,1],dtype=tf.float32)
 filter2 = tf.constant(value=1, shape=[3,3,1,1],dtype=tf.float32)
